@@ -331,7 +331,7 @@
       //RANDOM
       function validateUserRandom() {
         function checkCoordinatesOfMerchant(userLat, userLon) {
-          for (const coord of constraintCoordinatesOfMerchant) {
+          for (const coord of constraintCoordinatesOfMerchantORG) {
             const latDiff = Math.abs(coord.lat - userLat);
             const lonDiff = Math.abs(coord.lon - userLon);
 
@@ -372,6 +372,20 @@
           }
           return false;
         }
+        function checkCoordinatesOfCollege(userLat, userLon) {
+          for (const coord of constraintCoordinatesOfCollege) {
+            const latDiff = Math.abs(coord.lat - userLat);
+            const lonDiff = Math.abs(coord.lon - userLon);
+
+            // Define a threshold value for considering coordinates as close
+            const threshold = 0.0001;
+
+            if (latDiff < threshold && lonDiff < threshold) {
+              return true;
+            }
+          }
+          return false;
+        }
 
         function handleLocationSuccess(position) {
           const userLat = position.coords.latitude;
@@ -389,6 +403,10 @@
             userLat,
             userLon
           );
+          const isWithinCoordinatesOfCollege = checkCoordinatesOfCollege(
+            userLat,
+            userLon
+          );
 
           if (isWithinCoordinatesOfMerchant == true) {
             alert("You are within Merchant's coordinates");
@@ -396,8 +414,11 @@
             alert("You are within Kanaskar's coordinates");
           } else if (isWithinCoordinatesOfGosavi == true) {
             alert("You are within Gosavi's coordinates");
-          } else {
-            alert("You are not within the given coordinates.");
+          }else if (isWithinCoordinatesOfCollege == true) {
+            alert("You are within GGSP's coordinates");
+          }         
+          else {
+            alert("No coordinates matched!.");
           }
         }
 
