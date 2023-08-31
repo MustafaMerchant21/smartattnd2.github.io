@@ -12,24 +12,32 @@
     <title>mappedCoordinates</title>
     <style>
         .contain{
-            display: flex;
+          display: flex;
+          justify-content: center;
+            align-items: center;
             flex-wrap: wrap;
             gap: 10px;
         }
         .cont{
+          margin-top: 2em;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
             gap: 1em;
+            width: 100%;
         }
         body{
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             flex-direction: column;
-            height: 100vh;
-            width: 100vw;
+            height: 100%;
+            width: 100%;
+        }
+        #map {
+            height: 400px; 
+            width: 100%; 
         }
     </style>
   </head>
@@ -38,7 +46,7 @@
         <h1>Geolocation Check</h1>
         <p>Checking if you are within your coordinates...</p>
         <div class="contain">
-            <button
+            <!-- <button
               onclick="validateUserKanaskar()"
               id="kanaskar"
               class="btn btn-outline-primary text-white-50"
@@ -51,7 +59,7 @@
               class="btn btn-outline-primary text-white-50"
             >
               Harshal Gosavi
-            </button>
+            </button> -->
             <button
               onclick="validateUserMerchant()"
               id="merchant"
@@ -78,11 +86,12 @@
         <p id="latitude">Latitude:</p>
         <p id="longitude">Longitude:</p>
         <p id="google-maps-link"></p>
+        <div id="map"></div>
     </div>
 
     <script>
       // Given constraint coordinates
-      const constraintCoordinatesOfMerchant = [
+      const constraintCoordinatesOfMerchant= [
         // will prevent checkCoordinates to run, compromising argument of for loop
         { lat: 19.996682, lon: 73.799731 },
         { lat: 19.996714, lon: 73.801426 },
@@ -160,7 +169,7 @@
             const lonDiff = Math.abs(coord.lon - userLon);
 
             // Define a threshold value for considering coordinates as close
-            
+             
 
             if (latDiff < threshold && lonDiff < threshold) {
               return true;
@@ -202,7 +211,7 @@
             const lonDiff = Math.abs(coord.lon - userLon);
 
             // Define a threshold value for considering coordinates as close
-            
+             
 
             if (latDiff < threshold && lonDiff < threshold) {
               return true;
@@ -251,7 +260,8 @@
             const lonDiff = Math.abs(coord.lon - userLon);
 
             // Define a threshold value for considering coordinates as close
-            
+             
+
             if (latDiff < threshold && lonDiff < threshold) {
               return true;
             }
@@ -292,7 +302,7 @@
             const lonDiff = Math.abs(coord.lon - userLon);
 
             // Define a threshold value for considering coordinates as close
-            
+             
 
             if (latDiff < threshold && lonDiff < threshold) {
               return true;
@@ -336,7 +346,7 @@
             const lonDiff = Math.abs(coord.lon - userLon);
 
             // Define a threshold value for considering coordinates as close
-            
+             
 
             if (latDiff < threshold && lonDiff < threshold) {
               return true;
@@ -350,7 +360,7 @@
             const lonDiff = Math.abs(coord.lon - userLon);
 
             // Define a threshold value for considering coordinates as close
-            
+             
 
             if (latDiff < threshold && lonDiff < threshold) {
               return true;
@@ -364,7 +374,7 @@
             const lonDiff = Math.abs(coord.lon - userLon);
 
             // Define a threshold value for considering coordinates as close
-            
+             
 
             if (latDiff < threshold && lonDiff < threshold) {
               return true;
@@ -378,7 +388,7 @@
             const lonDiff = Math.abs(coord.lon - userLon);
 
             // Define a threshold value for considering coordinates as close
-            
+             
 
             if (latDiff < threshold && lonDiff < threshold) {
               return true;
@@ -414,11 +424,10 @@
             alert("You are within Kanaskar's coordinates");
           } else if (isWithinCoordinatesOfGosavi == true) {
             alert("You are within Gosavi's coordinates");
-          }else if (isWithinCoordinatesOfCollege == true) {
+          } else if (isWithinCoordinatesOfCollege == true) {
             alert("You are within GGSP's coordinates");
-          }         
-          else {
-            alert("No coordinates matched!.");
+          } else {
+            alert("No coordinates matched!");
           }
         }
 
@@ -447,6 +456,39 @@
         const googleMapsLink = `https://www.google.com/maps?q=${userLat},${userLon}`;
         document.getElementById("google-maps-link").innerHTML = `<a href="${googleMapsLink}" target="_blank">View on Google Maps</a>`;
 
+        (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+          key: "AIzaSyCNAwtqMaWIndTJRMLRC7Yw0GTWRSyy0h4",
+          v: "weekly",
+          // Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
+          // Add other bootstrap parameters as needed, using camel case.
+        });
+
+        // Initialize and add the map
+        let map;
+        async function initMap() {
+          // The location of Uluru
+          const position = { lat: userLat, lng: userLon };
+          // Request needed libraries.
+          //@ts-ignore
+          const { Map } = await google.maps.importLibrary("maps");
+          const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+          // The map, centered at Uluru
+          map = new Map(document.getElementById("map"), {
+            zoom: 40,
+            center:position,
+            mapId: "Location",
+          });
+
+          // The marker, positioned at Uluru
+          const marker = new AdvancedMarkerElement({
+            map: map,
+            position: position,
+            title: "Your Current Location",
+          });
+        }
+
+        initMap();
       }
 
       function handleLocationError(error) {
@@ -462,10 +504,16 @@
         alert("Geolocation is not available in your browser.");
       }
       function updateLocation() {
-        if ("geolocation" in navigator) {
+          const options = {
+              enableHighAccuracy: true,
+              timeout: 5000, // Maximum time to wait for location (in milliseconds)
+              maximumAge: 0   // Maximum age of cached location (in milliseconds)
+          };
+          if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(
                 handleLocationSuccess,
-                handleLocationError
+                handleLocationError,
+                options
             );
         } else {
             alert("Geolocation is not available in your browser.");
@@ -473,12 +521,42 @@
     }
     
     // Update location every 1 second
-    setInterval(function(){
-        updateLocation()
-        console.log("Refreshing...")
-    }
-        , 1000);
-      
+    
+    updateLocation()
+
+        //(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+          //key: "AIzaSyCNAwtqMaWIndTJRMLRC7Yw0GTWRSyy0h4",
+          //v: "weekly",
+          //// Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
+          //// Add other bootstrap parameters as needed, using camel case.
+        //});
+        //// Initialize and add the map
+        //let map;
+//
+        //async function initMap() {
+          //// The location of Uluru
+          //const position = { lat: -25.344, lng: 131.031 };
+          //// Request needed libraries.
+          ////@ts-ignore
+          //const { Map } = await google.maps.importLibrary("maps");
+          //const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+//
+          //// The map, centered at Uluru
+          //map = new Map(document.getElementById("map"), {
+            //zoom: 4,
+            //center: position,
+            //mapId: "DEMO_MAP_ID",
+          //});
+//
+          //// The marker, positioned at Uluru
+          //const marker = new AdvancedMarkerElement({
+            //map: map,
+            //position: position,
+            //title: "Uluru",
+          //});
+        //}
+//
+        //initMap();
     </script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
