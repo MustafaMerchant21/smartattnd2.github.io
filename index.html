@@ -506,7 +506,7 @@
       function updateLocation() {
           const options = {
               enableHighAccuracy: true,
-              timeout: 5000, // Maximum time to wait for location (in milliseconds)
+              timeout: 10000, // Maximum time to wait for location (in milliseconds)
               maximumAge: 0   // Maximum age of cached location (in milliseconds)
           };
           if ("geolocation" in navigator) {
