@@ -55,7 +55,7 @@
             <button
               onclick="validateUserMerchant()"
               id="merchant"
-              class="btn btn-outline-primary text-white-50"
+              class="btn btn-outline-primary text-white"
             >
               Mustafa Merchant
             </button>
@@ -146,6 +146,7 @@
         { lat: 19.957004240163794, lon: 73.77870743261718},
         { lat: 19.95692179490927, lon: 73.77868969304508},
       ];
+      const threshold = 0.01;
       let kan = document.getElementById("kanaskar");
       let gos = document.getElementById("gosavi");
       let mer = document.getElementById("merchant");
@@ -159,7 +160,7 @@
             const lonDiff = Math.abs(coord.lon - userLon);
 
             // Define a threshold value for considering coordinates as close
-            const threshold = 0.01;
+            
 
             if (latDiff < threshold && lonDiff < threshold) {
               return true;
@@ -201,7 +202,7 @@
             const lonDiff = Math.abs(coord.lon - userLon);
 
             // Define a threshold value for considering coordinates as close
-            const threshold = 0.0001;
+            
 
             if (latDiff < threshold && lonDiff < threshold) {
               return true;
@@ -250,8 +251,7 @@
             const lonDiff = Math.abs(coord.lon - userLon);
 
             // Define a threshold value for considering coordinates as close
-            const threshold = 0.0001;
-
+            
             if (latDiff < threshold && lonDiff < threshold) {
               return true;
             }
@@ -292,7 +292,7 @@
             const lonDiff = Math.abs(coord.lon - userLon);
 
             // Define a threshold value for considering coordinates as close
-            const threshold = 0.0001;
+            
 
             if (latDiff < threshold && lonDiff < threshold) {
               return true;
@@ -336,7 +336,7 @@
             const lonDiff = Math.abs(coord.lon - userLon);
 
             // Define a threshold value for considering coordinates as close
-            const threshold = 0.0001;
+            
 
             if (latDiff < threshold && lonDiff < threshold) {
               return true;
@@ -350,7 +350,7 @@
             const lonDiff = Math.abs(coord.lon - userLon);
 
             // Define a threshold value for considering coordinates as close
-            const threshold = 0.0001;
+            
 
             if (latDiff < threshold && lonDiff < threshold) {
               return true;
@@ -364,7 +364,7 @@
             const lonDiff = Math.abs(coord.lon - userLon);
 
             // Define a threshold value for considering coordinates as close
-            const threshold = 0.0001;
+            
 
             if (latDiff < threshold && lonDiff < threshold) {
               return true;
@@ -378,7 +378,7 @@
             const lonDiff = Math.abs(coord.lon - userLon);
 
             // Define a threshold value for considering coordinates as close
-            const threshold = 0.0001;
+            
 
             if (latDiff < threshold && lonDiff < threshold) {
               return true;
